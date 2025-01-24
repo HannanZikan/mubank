@@ -1,3 +1,19 @@
-from django.shortcuts import render
+from rest_framework import generics
+from mubank_api.models import Wallet, Transaction
+from mubank_api.serializers import WalletSerializer, TransactionSerializer
 
-# Create your views here.
+class WalletCreateListView(generics.ListCreateAPIView):
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+
+class WalletRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+
+class TransactionCreateListView(generics.ListCreateAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+class TransactionRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
