@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.utils.dateparse import parse_date
 from mubank_api.models import Wallet, Transaction
 from mubank_api.serializers import WalletSerializer, TransactionSerializer
 from mubank_api.services import WalletService, TransactionService
@@ -50,6 +51,21 @@ class TransactionTransferView(APIView):
 class TransactionListView(generics.ListAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+
+        if start_date:
+            start_date = parse_date(start_date)
+            queryset = queryset.filter(created_at__gte=start_date)
+
+        if end_date:
+            end_date = parse_date(end_date)
+            queryset = queryset.filter(created_at__lte=end_date)
+
+        return queryset
 
 class TransactionRetrieveDestroyView(generics.RetrieveDestroyAPIView):
     queryset = Transaction.objects.all()
