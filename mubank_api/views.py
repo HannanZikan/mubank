@@ -38,7 +38,14 @@ class TransactionWithdrawalView(APIView):
 class TransactionTransferView(APIView):
 
     def post(self, request):
-        return True
+        serializer = TransactionSerializer(data=request.data)
+        if serializer.is_valid():
+            TransactionService.create_transaction(serializer)
+            transaction = serializer.data            
+            WalletService.decrement_balance(transaction['transfer_wallet_id'],transaction['ammount'])
+            WalletService.increment_balance(transaction['receiving_wallet_id'],transaction['ammount'])
+            return Response(transaction, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TransactionListView(generics.ListAPIView):
     queryset = Transaction.objects.all()
