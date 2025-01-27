@@ -18,7 +18,7 @@ class Type_Transaction(models.IntegerChoices):
 
 class Transaction(models.Model):
     transfer_wallet_id = models.ForeignKey(Wallet, related_name='transfer', on_delete=models.PROTECT, null=True, blank=True)
-    receiving_wallet_id = models.ForeignKey(Wallet, related_name='receiver', on_delete=models.PROTECT)
+    receiving_wallet_id = models.ForeignKey(Wallet, related_name='receiver', on_delete=models.PROTECT, null=True, blank=True)
     ammount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     type = models.IntegerField(choices=Type_Transaction.choices)
     created_at = models.DateTimeField(auto_now_add=True)

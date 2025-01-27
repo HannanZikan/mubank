@@ -12,6 +12,6 @@ class WalletService:
 
     @staticmethod
     def decrement_balance(wallet_id, ammount):
-        wallet = Wallet(id = wallet_id.id)
-        wallet.balance -= ammount
+        wallet = Wallet.objects.get(id = wallet_id)
+        wallet.balance -= Decimal(ammount)
         wallet.save()
