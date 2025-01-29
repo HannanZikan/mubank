@@ -7,11 +7,6 @@ db.sqlite3
 media
 local_settings.py
 
-
-# Python # 
-*.py[cod] 
-*$py.class 
-
 # Installer logs 
 pip-log.txt 
 pip-delete-this-directory.txt 
