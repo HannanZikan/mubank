@@ -2,7 +2,7 @@ from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils.dateparse import parse_date
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from mubank_api.models import Wallet, Transaction
 from mubank_api.serializers import WalletSerializer, TransactionSerializer, UserSerializer
 from mubank_api.services import WalletService, TransactionService
@@ -75,11 +75,17 @@ class TransactionRetrieveDestroyView(generics.RetrieveDestroyAPIView):
 class UserCreateView(APIView):
     permission_classes = [permissions.AllowAny]
     
+    
     def post(self, request):
-        data = request.data
-        new_user = User.objects.create_user(
-            username = data['username'],
-            password= data['password']
-        )
-        
-        return Response(UserSerializer(new_user).data, status=status.HTTP_201_CREATED)
+        serializer = UserSerializer(data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            # data = request.data
+            new_user = User.objects.create_user(
+                username = serializer.data['username'],
+                password = serializer.data['password']
+            )
+            new_user.groups.add(Group.objects.get(name='user_default_permissions'))
+            
+            return Response(UserSerializer(new_user).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
