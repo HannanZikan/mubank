@@ -75,7 +75,6 @@ class TransactionRetrieveDestroyView(generics.RetrieveDestroyAPIView):
 class UserCreateView(APIView):
     permission_classes = [permissions.AllowAny]
     
-    
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         print(serializer)
@@ -86,5 +85,5 @@ class UserCreateView(APIView):
             )
             new_user.groups.add(Group.objects.get(name='user_default_permissions'))
             
-            return Response(UserSerializer(new_user).data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
