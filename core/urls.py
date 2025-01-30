@@ -20,7 +20,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/token/', jwt_views.TokenObtainPairView.as_view(),name='token_obtain_pair'),
-    path('api/v1/token/refresh/', jwt_views.TokenRefreshView.as_view(),name='token_refresh'),
     path('api/v1/', include('mubank_api.urls'))
+    path('api/v1/token/', jwt_views.TokenObtainPairView.as_view(),name='token-obtain-pair'),
+    path('api/v1/token/refresh/', jwt_views.TokenRefreshView.as_view(),name='token-refresh'),
+    path('api/v1/signup/', views.UserCreateView.as_view(), name='user-create')
 ]
