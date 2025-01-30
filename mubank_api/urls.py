@@ -9,4 +9,5 @@ urlpatterns = [
     path('transaction/withdrawal', views.TransactionWithdrawalView.as_view(), name='transaction-withdrawal-view'),
     path('transaction/transfer', views.TransactionTransferView.as_view(), name='transaction-transfer-view'),
     path('transaction/<int:pk>/', views.TransactionRetrieveDestroyView.as_view(), name='transaction-delete-view'),
+    path('signup/', views.UserCreateApiView.as_view(), name='user-create')
 ]

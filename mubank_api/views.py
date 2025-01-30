@@ -1,9 +1,10 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils.dateparse import parse_date
+from django.contrib.auth.models import User
 from mubank_api.models import Wallet, Transaction
-from mubank_api.serializers import WalletSerializer, TransactionSerializer
+from mubank_api.serializers import WalletSerializer, TransactionSerializer, UserSerializer
 from mubank_api.services import WalletService, TransactionService
 
 class WalletCreateListView(generics.ListCreateAPIView):
@@ -70,3 +71,16 @@ class TransactionListView(generics.ListAPIView):
 class TransactionRetrieveDestroyView(generics.RetrieveDestroyAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+
+class UserCreateApiView(APIView):
+    # queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
+    
+    def post(self, request):
+        data = request.data
+        new_user = User.objects.create_user(
+            username = data['username'],
+            password= data['password']
+        )
+        
+        return Response(UserSerializer(new_user).data, status=status.HTTP_201_CREATED)
