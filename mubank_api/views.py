@@ -72,8 +72,7 @@ class TransactionRetrieveDestroyView(generics.RetrieveDestroyAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
-class UserCreateApiView(APIView):
-    # queryset = User.objects.all()
+class UserCreateView(APIView):
     permission_classes = [permissions.AllowAny]
     
     def post(self, request):
