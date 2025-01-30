@@ -10,7 +10,7 @@ TODO:
     -[x] implementar autenticação com JWT
         -[] implementar login
         -[] implementar redefinir senha
-        -[] implementar permissões de usuário
+        -[x] implementar permissões de usuário
 
     -[ ] implementar banco de dados postgreSQL
 

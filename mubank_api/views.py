@@ -80,7 +80,6 @@ class UserCreateView(APIView):
         serializer = UserSerializer(data=request.data)
         print(serializer)
         if serializer.is_valid():
-            # data = request.data
             new_user = User.objects.create_user(
                 username = serializer.data['username'],
                 password = serializer.data['password']
