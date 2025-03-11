@@ -8,9 +8,11 @@ TODO:
     -[x] implementar endpoints para criação de usuário
 
     -[x] implementar autenticação com JWT
-        -[] implementar login
-        -[] implementar redefinir senha
+        -[x] implementar login
+        -[ ] implementar redefinir senha
         -[x] implementar permissões de usuário
+    
+    -[ ] implementar população automática do bdd
 
     -[ ] implementar banco de dados postgreSQL
 
